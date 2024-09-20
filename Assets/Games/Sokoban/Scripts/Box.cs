@@ -8,6 +8,8 @@ namespace Game.Sokoban
     public class Box : MonoBehaviour, IInteractable
     {
         [Header("Settings")]
+        [SerializeField]
+        private Sprite _spriteComplete;
         [SerializeField] private LayerMask _layerDot;
 
         public Action<bool> onTrigger;
@@ -18,10 +20,13 @@ namespace Game.Sokoban
 
         private Transform _baseTransform;
 
+        private Sprite _spriteBase;
+
         private void Awake()
         {
             _boxCollider2 = GetComponent<BoxCollider2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _spriteBase = _spriteRenderer.sprite;
             _baseTransform = transform.parent;
         }
 
@@ -64,7 +69,7 @@ namespace Game.Sokoban
                 Debug.Log("TRUE");
             }
 
-            _spriteRenderer.color = _isComplete ? Color.yellow : Color.white;
+            _spriteRenderer.sprite = _isComplete ?_spriteComplete : _spriteBase;
         }
     }
 }

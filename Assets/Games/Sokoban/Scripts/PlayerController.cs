@@ -7,13 +7,14 @@ namespace Game.Sokoban
     {
         [Header("Settings")]
         [SerializeField] private bool _isMovementSmooth = false;
+        //Cantidad de pasos que se va a mover el jugador, para moverse de a casilla
         [SerializeField] private float _step = 1;
         [SerializeField] private float _timeMovement = .1f;
         [SerializeField] private LayerMask _layerInteraction;
 
         //Input
         private SokobanInputAction _inputAction;
-        //Movement Smooth  //Se crea una Coroutine para mejorar el movimiento del personaje, y se deplace mas suvamente
+        //Movement Smooth  //Se crea una Coroutine para mejorar el movimiento del personaje, y se deplace mas suavemente
         private Coroutine _currentMovement;
         private RaycastHit2D _raycastHitPlayer;
         private RaycastHit2D _raycastHitBox;
@@ -114,7 +115,6 @@ namespace Game.Sokoban
             while (currentTime < _timeMovement)
             {
                 transform.position = Vector3.Lerp(starPosition, targetPosition, currentTime / _timeMovement);
-
                 currentTime += Time.deltaTime;
                 yield return null;
             }
