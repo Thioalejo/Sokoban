@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Game.Sokoban
 {
+    [RequireComponent(typeof(Animator))]
     public class PlayerController : MonoBehaviour
     {
         [Header("Settings")]
@@ -20,6 +21,17 @@ namespace Game.Sokoban
         private RaycastHit2D _raycastHitBox;
         private string _tagBox = "Box";
         private IInteractable _currentBox;
+
+        //Animation
+        private Animator _animator;
+        private int _has_IsMove = Animator.StringToHash("IsMove");
+        private int _has_InputX = Animator.StringToHash("InputX");
+        private int _has_InputY = Animator.StringToHash("InputY");
+
+        private void Awake()
+        {
+            _animator = GetComponent<Animator>();
+        }
 
 
         private void Start()
@@ -47,6 +59,9 @@ namespace Game.Sokoban
         private void MoveBasic(Vector2 direction)
         {
             _raycastHitPlayer = Physics2D.Raycast(transform.position, direction, _step, _layerInteraction);
+
+            _animator.SetFloat(_has_InputX, direction.x);
+            _animator.SetFloat(_has_InputY, direction.y);
 
             if (_raycastHitPlayer.collider == null)
             {
@@ -81,6 +96,9 @@ namespace Game.Sokoban
 
             _raycastHitPlayer = Physics2D.Raycast(transform.position, direction, _step, _layerInteraction);
 
+            _animator.SetFloat(_has_InputX, direction.x);
+            _animator.SetFloat(_has_InputY, direction.y);
+
             if (_raycastHitPlayer.collider == null)
             {
                 _currentMovement = StartCoroutine(PlayerMoveSmooth(direction));
@@ -99,14 +117,15 @@ namespace Game.Sokoban
 
                         _currentMovement = StartCoroutine(PlayerMoveSmooth(direction));
                     }
-
-
                 }
             }
         }
 
         private IEnumerator PlayerMoveSmooth(Vector2 direction)
         {
+
+            _animator.SetBool(_has_IsMove, true);
+
             //para mover el personaje y modificar el tiempo sumando el tiempo entre frame
             Vector3 starPosition = transform.position;
             Vector3 targetPosition = transform.position + (Vector3)direction;
@@ -129,6 +148,7 @@ namespace Game.Sokoban
                 _currentBox = null;
             }
 
+            _animator.SetBool(_has_IsMove, false);
             _currentMovement = null;
 
         }
