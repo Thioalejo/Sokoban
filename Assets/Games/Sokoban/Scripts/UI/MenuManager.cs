@@ -21,6 +21,8 @@ namespace Game.Sokoban
 
         private void Start()
         {
+            //GameInstance.Instance.selectedLevel = 50;
+
             GoToMainMenu();
 
             //Leves for Show
