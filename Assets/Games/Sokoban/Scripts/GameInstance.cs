@@ -45,6 +45,8 @@ namespace Game.Sokoban
         public int selectedLevel;
         public int maxLevelWinneed;
         public bool gameFinished;
+        public bool volumMusicActive = true;
+        public bool volumSFXActive = true;
 
     }
 }

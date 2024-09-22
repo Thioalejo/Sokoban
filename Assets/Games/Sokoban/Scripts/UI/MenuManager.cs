@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 namespace Game.Sokoban
@@ -7,6 +8,9 @@ namespace Game.Sokoban
     {
         [Header("General")]
         [SerializeField] private int _levesAvailables;
+
+        [Header("Audio")]
+        [SerializeField] private AudioMixer _mixer;
 
         [Header("References")]
         [SerializeField] private MenuSlot[] _menuSlots;
@@ -17,6 +21,10 @@ namespace Game.Sokoban
 
         private int _currentIndexMenu;
         private int _lastIndexMenu;
+
+        //Audio
+        private const string MIXER_MUSIC = "Music volume";
+        private const string MIXER_SFX = "SFX Volume";
 
         private void Start()
         {
@@ -41,6 +49,26 @@ namespace Game.Sokoban
                 levelSlot.Initialize(i,true);
                 levelSlot.onSelect += OnSelecteLevel;
             }
+
+            ToggleMusic(GameInstance.Instance.volumMusicActive);
+            ToggleSFX(GameInstance.Instance.volumSFXActive);
+        }
+
+        public void ToggleMusic(bool isAtive)
+        {
+            ChangeVolum(MIXER_MUSIC, isAtive ? 1 : 0.01f);
+            GameInstance.Instance.volumMusicActive = isAtive;
+        }
+
+        public void ToggleSFX(bool isAtive)
+        {
+            ChangeVolum(MIXER_SFX, isAtive ? 1 : 0.01f);
+            GameInstance.Instance.volumSFXActive = isAtive;
+        }
+
+        public void ChangeVolum(string parameter, float value)
+        {
+            _mixer.SetFloat(parameter, Mathf.Log10(value) * 20);
         }
 
         private void OnSelecteLevel(int index)
