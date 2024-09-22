@@ -153,7 +153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7053149865728999898, guid: 05976a9ec5552c64d8d66f130d262263, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7053149865728999898, guid: 05976a9ec5552c64d8d66f130d262263, type: 3}
       propertyPath: m_AnchorMax.x
@@ -478,6 +478,8 @@ MonoBehaviour:
   - {fileID: 3940484132937462078, guid: 36542a37cff337542bd187e44284d7cc, type: 3}
   - {fileID: 3940484132937462078, guid: 087a8a5204a5a89498a1ac703cbbda46, type: 3}
   _currentLevelIndex: 0
+  _boxTota: 0
+  _boxCurrent: 0
 --- !u!4 &949709190
 Transform:
   m_ObjectHideFlags: 0
@@ -518,7 +520,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7053149865728999898, guid: 05976a9ec5552c64d8d66f130d262263, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7053149865728999898, guid: 05976a9ec5552c64d8d66f130d262263, type: 3}
       propertyPath: m_AnchorMax.x
@@ -640,6 +642,7 @@ GameObject:
   - component: {fileID: 1454680154}
   - component: {fileID: 1454680153}
   - component: {fileID: 1454680157}
+  - component: {fileID: 1454680158}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -747,6 +750,19 @@ MonoBehaviour:
   _gameManager: {fileID: 949709189}
   _textLevel: {fileID: 1557484162}
   _buttonRestart: {fileID: 1737379073}
+--- !u!114 &1454680158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454680152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c416860679f8074c876aadbf9289d32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _menuSlots: []
 --- !u!1 &1557484160
 GameObject:
   m_ObjectHideFlags: 0
@@ -1032,7 +1048,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6446973300879694101, guid: 717722ef2bbadc7419ae8743ba205288, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6446973300879694101, guid: 717722ef2bbadc7419ae8743ba205288, type: 3}
       propertyPath: m_AnchorMax.x
