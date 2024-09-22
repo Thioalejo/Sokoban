@@ -157,6 +157,23 @@ namespace Game.Sokoban
         {
             _inputAction.Player.Disable();
         }
+
+        //para que el personaje no se mueva mientras se crean los demas niveles
+        public void Restart()
+        {
+            StopAllCoroutines();
+            _currentMovement = null;
+
+            if(_currentBox != null)
+            {
+                _currentBox.RemoveParent();
+                _currentBox = null;
+            }
+
+            _animator.SetFloat(_has_InputX, 0);
+            _animator.SetFloat(_has_InputY, 0);
+            _animator.SetBool(_has_IsMove, false);
+        }
     }
 
 }
