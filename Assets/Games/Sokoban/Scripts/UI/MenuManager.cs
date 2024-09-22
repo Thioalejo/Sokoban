@@ -6,8 +6,15 @@ namespace Game.Sokoban
 {
     public class MenuManager : MonoBehaviour
     {
+        [Header("General")]
+        [SerializeField] private int _levesAvailables;
+
         [Header("References")]
         [SerializeField] private MenuSlot[] _menuSlots;
+        [SerializeField] private LevelSlot _levelPrefab;
+        [SerializeField] private Transform _levelParent;
+
+         private int _maxLevelWinnded;
 
         private int _currentIndexMenu;
         private int _lastIndexMenu;
@@ -15,6 +22,20 @@ namespace Game.Sokoban
         private void Start()
         {
             GoToMainMenu();
+
+            //Leves for Show
+            for (int i = 0; i < _levesAvailables; i++)
+            {
+                LevelSlot levelSlot = Instantiate(_levelPrefab, _levelParent);
+                //levelSlot.Initialize(i, i <= _maxLevelWinnded);
+                levelSlot.Initialize(i,true);
+                levelSlot.onSelect += OnSelecteLevel;
+            }
+        }
+
+        private void OnSelecteLevel(int index)
+        {
+            Debug.Log($"Select Level: {index}");
         }
 
         private void ChangeMenu(int index)
