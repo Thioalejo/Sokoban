@@ -43,6 +43,8 @@ namespace Game.Sokoban
 
         [Header("Data")]
         public int selectedLevel;
+        public int maxLevelWinneed;
+        public bool gameFinished;
 
     }
 }

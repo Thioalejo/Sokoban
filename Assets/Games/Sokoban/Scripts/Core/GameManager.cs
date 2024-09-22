@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace Game.Sokoban
 {
@@ -32,7 +33,10 @@ namespace Game.Sokoban
 
         private void Start()
         {
+            _currentLevelIndex = GameInstance.Instance.selectedLevel;
+
             OnChangedLevel.Invoke(_currentLevelIndex);
+
             StartCoroutine(CreateLevel());
         }
         public void ResetLevel()
@@ -40,6 +44,11 @@ namespace Game.Sokoban
             _playerController.Restart();
             StartCoroutine(CreateLevel());
 
+        }
+
+        public void BackToMainMenu()
+        {
+            SceneManager.LoadScene(0);
         }
 
         private IEnumerator CreateLevel()
@@ -93,6 +102,9 @@ namespace Game.Sokoban
                     //Al completar las cajas del nivel, incremente en 1 y si hay niveles pasa, si no Win Gana
                     _currentLevelIndex++;
                     OnChangedLevel.Invoke(_currentLevelIndex);
+
+                    GameInstance.Instance.maxLevelWinneed = _currentLevelIndex;
+
                     if (_currentLevelIndex < _levels.Length)
                     {
                         StartCoroutine(CreateLevel());
@@ -100,6 +112,8 @@ namespace Game.Sokoban
                     else
                     {
                         //Win
+                        GameInstance.Instance.gameFinished = true;
+                        BackToMainMenu();
                         Debug.Log("WIN");
                     }
                 }

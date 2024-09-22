@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game.Sokoban
 {
@@ -21,15 +20,24 @@ namespace Game.Sokoban
 
         private void Start()
         {
-            //GameInstance.Instance.selectedLevel = 50;
+            if (GameInstance.Instance.gameFinished)
+            {
+                GameInstance.Instance.gameFinished = false;
+                GoToEndDemo();
+            }
+            else
+            {
+                GoToMainMenu();
+            }
 
-            GoToMainMenu();
+
+            _maxLevelWinnded = GameInstance.Instance.maxLevelWinneed;
 
             //Leves for Show
             for (int i = 0; i < _levesAvailables; i++)
             {
                 LevelSlot levelSlot = Instantiate(_levelPrefab, _levelParent);
-                //levelSlot.Initialize(i, i <= _maxLevelWinnded);
+                levelSlot.Initialize(i, i <= _maxLevelWinnded);
                 levelSlot.Initialize(i,true);
                 levelSlot.onSelect += OnSelecteLevel;
             }
@@ -37,7 +45,9 @@ namespace Game.Sokoban
 
         private void OnSelecteLevel(int index)
         {
-            Debug.Log($"Select Level: {index}");
+            //Debug.Log($"Select Level: {index}");
+            GameInstance.Instance.selectedLevel = index;
+            SceneManager.LoadScene(1);
         }
 
         private void ChangeMenu(int index)

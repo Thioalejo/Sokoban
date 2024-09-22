@@ -12,10 +12,13 @@ namespace Game.Sokoban
         [Header("References")]
         [SerializeField] private TextMeshProUGUI _textLevel;
         [SerializeField] private Button _buttonRestart;
+        [SerializeField] private Button _buttonHome;
 
         private void Awake()
         {
             _buttonRestart.onClick.AddListener(() => _gameManager.ResetLevel());
+            _buttonHome.onClick.AddListener(() => _gameManager.BackToMainMenu());
+
             _gameManager.OnChangedLevel += UpdateTextLeve;
         }
 
