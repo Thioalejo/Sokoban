@@ -11,6 +11,8 @@ namespace Game.Sokoban
 
         [Header("Audio")]
         [SerializeField] private AudioMixer _mixer;
+        [SerializeField] private ButtonToggle _toggleMusic;
+        [SerializeField] private ButtonToggle _toggleSFX;
 
         [Header("References")]
         [SerializeField] private MenuSlot[] _menuSlots;
@@ -39,7 +41,7 @@ namespace Game.Sokoban
             }
 
 
-            _maxLevelWinnded = GameInstance.Instance.maxLevelWinneed;
+            _maxLevelWinnded = GameInstance.Instance.LoadInt("MaxLevelWinned",0);
 
             //Leves for Show
             for (int i = 0; i < _levesAvailables; i++)
@@ -56,14 +58,16 @@ namespace Game.Sokoban
 
         public void ToggleMusic(bool isAtive)
         {
-            ChangeVolum(MIXER_MUSIC, isAtive ? 1 : 0.01f);
+            ChangeVolum(MIXER_MUSIC, isAtive ? 1 : 0.00001f);
             GameInstance.Instance.volumMusicActive = isAtive;
+            _toggleMusic.ToggleValue(isAtive);
         }
 
         public void ToggleSFX(bool isAtive)
         {
-            ChangeVolum(MIXER_SFX, isAtive ? 1 : 0.01f);
+            ChangeVolum(MIXER_SFX, isAtive ? 1 : 0.00001f);
             GameInstance.Instance.volumSFXActive = isAtive;
+            _toggleSFX.ToggleValue(isAtive);
         }
 
         public void ChangeVolum(string parameter, float value)

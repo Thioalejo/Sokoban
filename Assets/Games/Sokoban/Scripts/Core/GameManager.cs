@@ -18,6 +18,10 @@ namespace Game.Sokoban
         //Levels para ir de nivel en nivel por indice, sea nivel 0, nivel 1 etc.
         [SerializeField] private int _currentLevelIndex;
 
+        [Header("Audio")]
+        [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private AudioClip _sfxWin;
+
         //Para guardar referencia actual del objeto instanciado
         private GameObject _currentLevel;
 
@@ -103,10 +107,14 @@ namespace Game.Sokoban
                     _currentLevelIndex++;
                     OnChangedLevel.Invoke(_currentLevelIndex);
 
-                    GameInstance.Instance.maxLevelWinneed = _currentLevelIndex;
+                    //GameInstance.Instance.SaveMaxLevelWinned(_currentLevelIndex);
+
+                    //Sonido de que se gano!!
+                    _audioSource.PlayOneShot(_sfxWin);
 
                     if (_currentLevelIndex < _levels.Length)
                     {
+                        GameInstance.Instance.SaveMaxLevelWinned(_currentLevelIndex);
                         StartCoroutine(CreateLevel());
                     }
                     else

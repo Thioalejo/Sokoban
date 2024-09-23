@@ -17,7 +17,11 @@ namespace Game.Sokoban
 
         private void Start()
         {
-            ChangeVisibility(_startVisible);
+            if(_startVisible)
+            {
+                Show();
+            }
+            //ChangeVisibility(_startVisible);
         }
 
         //para apagar o mostrar un menu

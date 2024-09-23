@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Sokoban
 {
-    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(Animator),typeof(AudioSource))]
     public class PlayerController : MonoBehaviour
     {
         [Header("Settings")]
@@ -12,6 +12,7 @@ namespace Game.Sokoban
         [SerializeField] private float _step = 1;
         [SerializeField] private float _timeMovement = .1f;
         [SerializeField] private LayerMask _layerInteraction;
+        [SerializeField] private AudioClip _sfxMove;
 
         //Input
         private SokobanInputAction _inputAction;
@@ -22,6 +23,8 @@ namespace Game.Sokoban
         private string _tagBox = "Box";
         private IInteractable _currentBox;
 
+        private AudioSource _audioSource;
+
         //Animation
         private Animator _animator;
         private int _has_IsMove = Animator.StringToHash("IsMove");
@@ -31,6 +34,7 @@ namespace Game.Sokoban
         private void Awake()
         {
             _animator = GetComponent<Animator>();
+            _audioSource = GetComponent<AudioSource>();
         }
 
 
@@ -66,6 +70,8 @@ namespace Game.Sokoban
             if (_raycastHitPlayer.collider == null)
             {
                 transform.position += (Vector3)direction * _step;
+
+                PlaySFXMove();
             }
             else
             {
@@ -78,6 +84,7 @@ namespace Game.Sokoban
                         transform.position += (Vector3)direction * _step;
                         _raycastHitPlayer.collider.gameObject.transform.position += ((Vector3)direction * _step);
 
+                        PlaySFXMove();
                         //Para configurar trigger del punto  
                         _currentBox = _raycastHitPlayer.collider.GetComponent<IInteractable>();
                         _currentBox.Trigger();
@@ -131,6 +138,8 @@ namespace Game.Sokoban
             Vector3 targetPosition = transform.position + (Vector3)direction;
             float currentTime = 0;
 
+            PlaySFXMove();
+
             while (currentTime < _timeMovement)
             {
                 transform.position = Vector3.Lerp(starPosition, targetPosition, currentTime / _timeMovement);
@@ -173,6 +182,12 @@ namespace Game.Sokoban
             _animator.SetFloat(_has_InputX, 0);
             _animator.SetFloat(_has_InputY, 0);
             _animator.SetBool(_has_IsMove, false);
+        }
+
+        private void PlaySFXMove()
+        {
+            _audioSource.pitch = Random.Range(099f, 1.1f);
+            _audioSource.PlayOneShot(_sfxMove);
         }
     }
 

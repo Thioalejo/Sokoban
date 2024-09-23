@@ -40,6 +40,40 @@ namespace Game.Sokoban
             }
         }
 
+        //para guardado local
+        #region PlayerPrefs
+
+        public void SaveString(string key, string value)
+        {
+            PlayerPrefs.SetString(key, value);
+            PlayerPrefs.Save();
+        }
+
+        public string LoadString(string key, string defaultValue)
+        {
+            return PlayerPrefs.GetString(key, defaultValue);
+
+        }
+
+        public void SaveInt(string key, int value)
+        {
+            PlayerPrefs.SetInt(key, value);
+            PlayerPrefs.Save();
+        }
+
+        public int LoadInt(string key, int defaultValue)
+        {
+            return PlayerPrefs.GetInt(key, defaultValue);
+
+        }
+
+        [ContextMenu("Delete All Saves")]
+        public void DeleteAll()
+        {
+            PlayerPrefs.DeleteAll();
+        }
+        #endregion
+
 
         [Header("Data")]
         public int selectedLevel;
@@ -48,6 +82,12 @@ namespace Game.Sokoban
         public bool volumMusicActive = true;
         public bool volumSFXActive = true;
 
+
+        public void SaveMaxLevelWinned(int value)
+        {
+            if (value <= maxLevelWinneed) return;
+            SaveInt("MaxLevelWinned", value);
+        }
     }
 }
 
